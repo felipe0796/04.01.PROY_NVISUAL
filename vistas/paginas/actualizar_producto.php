@@ -3,10 +3,10 @@
     if (isset($_GET["id"])) {
         $id = "id";
         $valorGetId = $_GET["id"];
-        $productoId = ControladorFormularios::ctrSelecionarRegistros(null, null, $id, $valorGetId);
+        $productoId = ControladorFormularios::ctrSelecionarRegistros(null, null, $id, $valorGetId, null);
         $tipo = ControladorFormularios::ctrSelecionarTipo();
 
-        echo "<pre>";print_r($productoId);echo"</pre>";
+        //echo "<pre>";print_r($productoId);echo"</pre>";
     }
     $actuizar =new ControladorFormularios();
     $actuizar -> ctrActualizarRegistro();
@@ -83,7 +83,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-dark py-1 px-5"><i class="far fa-edit"></i></button>
+            <button type="submit" class="btn btn-dark py-1 px-5"><i class="fas fa-pen"></i></button>
         </div>
     </form>
 </div>

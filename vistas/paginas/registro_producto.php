@@ -71,7 +71,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-dark py-1 px-5"><i class="fas fa-check-square"></i></button>
+            <button type="submit" class="btn btn-dark py-1 px-5"><i class="fas fa-check"></i></button>
         </div>
     </form>
 </div>

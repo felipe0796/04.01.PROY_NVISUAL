@@ -30,20 +30,19 @@ class ModeloFormularios{
     /**
      * SELECCIONAR REGISTRO, INGRESO LOGIN Y MOSTRAR DATOS SEGUN EL ID ----------------------------
      */
-    static public function mdlSelecionarRegistros($email, $valorPostEmail, $id, $valorGetId){
+    static public function mdlSelecionarRegistros($email, $valorPostEmail, $id, $valorGetId, $valorEstado){
 
         if ($email == null && $valorPostEmail == null && $id == null && $valorGetId == null) {
             
-            $stmt = Conexion::conectar()->prepare("call sp_listar_producto()");
+            $stmt = Conexion::conectar()->prepare("call sp_listar_producto(:estado)");
+
+            $stmt -> bindParam(":estado",$valorEstado, PDO::PARAM_INT);
 
             $stmt -> execute();
 
             return $stmt -> fetchAll();
 
-
-
-
-        }elseif ($id == null && $valorGetId == null) {
+        }elseif ($id == null && $valorGetId == null && $valorEstado == null) {
 
             /** Ingreso mediante el email*/
             $stmt = conexion::conectar()->prepare("call sp_loginUsuario(:$email,null)");
@@ -54,7 +53,7 @@ class ModeloFormularios{
 
             return $stmt -> fetch();
 
-        }elseif ($email == null && $valorPostEmail == null){
+        }elseif ($email == null && $valorPostEmail == null && $valorEstado == null){
 
             /** Mostrará datos deacuerdo al id */
             $stmt = conexion::conectar()->prepare("call sp_listar_producto_id(:$id)");
@@ -99,11 +98,12 @@ class ModeloFormularios{
 
     /**
      * ELIMINAR REGISTRO-----------------------------------------------------------------------------
-     */ 
-    static public function mdlEliminarRegistro($valor){
+     */
+    static public function mdlActualziarEstadoProducto($valor, $valorEstado){
 
-        $stmt = Conexion::conectar()->prepare("CALL sp_elimina_producto (:id)");
+        $stmt = Conexion::conectar()->prepare("CALL sp_elimina_producto (:estado, :id)");
 
+        $stmt -> bindParam(":estado", $valorEstado, PDO::PARAM_INT);
         $stmt -> bindParam(":id", $valor, PDO::PARAM_INT);
 
         if ($stmt ->execute()) {

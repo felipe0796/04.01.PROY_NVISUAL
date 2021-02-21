@@ -71,8 +71,14 @@
                   
 
                   
-                    <!-- REGISTRO PRODUCTO -->
+                    <!-- LISTADO PRODUCTO -->
                     <a class="dropdown-item" href="index.php?pagina=listado_producto">Listado de Productos</a>
+
+
+
+                    <!-- LISTADO PRODUCTO ELIMINADO-->
+                    <a class="dropdown-item" href="index.php?pagina=listado_producto_eliminado">Listado de Productos Eliminados</a>
+
                   
                 </div>
               </li>
@@ -83,7 +89,7 @@
             <ul class="navbar-nav ml-auto">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="far fa-user "><span class="font-weight-bold font-italic text-dark ml-3 px-5 py-2 bg-light rounded">login</span></i>
+                  <i class="far fa-user "><span class="font-weight-bold font-italic text-dark ml-3 px-5 py-2 bg-light rounded"></span></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
@@ -121,7 +127,8 @@
           $_GET["pagina"] == "registro_producto" ||
           $_GET["pagina"] == "listado_producto" ||
           $_GET["pagina"] == "registro_usuario" ||
-          $_GET["pagina"] == "actualizar_producto" 
+          $_GET["pagina"] == "actualizar_producto"||
+          $_GET["pagina"] == "listado_producto_eliminado" 
          
         ) {
 

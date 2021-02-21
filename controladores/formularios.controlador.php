@@ -38,7 +38,7 @@ class ControladorFormularios{
                        
                 $respuesta = ModeloFormularios::mdlRegistro($tabla, $datos);
                             
-                echo '<div class="alert alert-success" id="alerta">'; echo "El usuario N°: ".$respuesta["id"]." ha sido registrado</div>";
+                echo '<div class="alert alert-success" id="alerta">'; echo "El producto N°: ".$respuesta["id"]." ha sido registrado</div>";
                 ;   
                         
             } 
@@ -60,7 +60,7 @@ class ControladorFormularios{
         /**Desaparece el mensaje de alerta */    
         echo "<script type='text/javascript'>
         $(document).ready(function() {
-            $('#alerta').delay(3000).slideUp(300, function() {
+            $('#alerta').delay(2000).slideUp(200, function() {
                 $(this).alert('close');
             });
         });
@@ -70,9 +70,9 @@ class ControladorFormularios{
     /**
      * SELECCIONAR REGISTROS (listado)
      */
-    static public function ctrSelecionarRegistros($email, $valorPostEmail, $id, $valorGetId){
+    static public function ctrSelecionarRegistros($email, $valorPostEmail, $id, $valorGetId, $valorEstado){
 
-        $respuesta = ModeloFormularios::mdlSelecionarRegistros($email, $valorPostEmail, $id, $valorGetId);
+        $respuesta = ModeloFormularios::mdlSelecionarRegistros($email, $valorPostEmail, $id, $valorGetId, $valorEstado);
 
         return $respuesta;
     }
@@ -185,26 +185,50 @@ class ControladorFormularios{
      * ELIMINAR REGISTROS
      */
 
-    public function ctrEliminarRegistro(){
+    public function ctrEliminarRegistro($valorEstado){
 
-        if(isset($_POST["eliminarRegistro"])){
 
-            $valor = $_POST["eliminarRegistro"];
+        if(isset($_POST["eliminarRegistro"]) ||  isset($_POST["restaurarRegistro"])){
 
-            /** PRUEBA (funciona)*/
-            $controlAlerta = ControladorFormularios::ctrControlAlerta();
-            echo $controlAlerta;
+            /** VALOR DE ESTADO PARA "ELIMINAR" - /listado_producto */
+            if ($valorEstado == 1) {
 
-            $respuesta = ModeloFormularios::mdlEliminarRegistro($valor);
+                $valor = $_POST["eliminarRegistro"];
 
-            if ($respuesta == "ok") {
-                echo '<div class="alert alert-success" id="alerta">El registro del usuario ha sido eliminado</div>
-                <script>
-                    setTimeout(function(){
-                        window.location = "index.php?pagina=listado_producto";
-                    },3600);
-                </script>';
+                $controlAlerta = ControladorFormularios::ctrControlAlerta();
+                echo $controlAlerta;
+
+                $respuesta = ModeloFormularios::mdlActualziarEstadoProducto($valor, $valorEstado);
+
+                if ($respuesta == "ok") {
+                    echo '<div class="alert alert-success mx-5 mb-3 p-2" id="alerta">El producto fue eliminado satisfactoriamente.</div>
+                    <script>
+                        setTimeout(function(){
+                            window.location = "index.php?pagina=listado_producto";
+                        },2800);
+                    </script>';
+                }
+            /** VALOR DE ESTADO PARA RESTAURAR -/listado_producto_eliminado*/    
+            }elseif ($valorEstado == 0) {
+
+                $valor = $_POST["restaurarRegistro"];
+
+                $controlAlerta = ControladorFormularios::ctrControlAlerta();
+                echo $controlAlerta;
+
+                $respuesta = ModeloFormularios::mdlActualziarEstadoProducto($valor, $valorEstado);
+
+                if ($respuesta == "ok") {
+                    echo '<div class="alert alert-success mx-5 mb-4 p-2" id="alerta">El producto fue restaurado satisfactoriamente.</div>
+                    <script>
+                        setTimeout(function(){
+                            window.location = "index.php?pagina=listado_producto_eliminado";
+                        },2700);
+                    </script>';
+                }
             }
+
+            
 
         }
 

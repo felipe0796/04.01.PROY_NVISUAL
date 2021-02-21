@@ -1,12 +1,11 @@
-<h5 class="text-center py-2 mx-5 mb-4 bg-primary rounded">LISTADO DE PRODUCTOS</h5>
+<h5 class="text-center py-2 mx-5 mb-4 bg-danger rounded">LISTADO DE PRODUCTOS ELIMINADOS</h5>
 
 <?php
 
-/** 0 : ES EL CODIGO QUE MUESTRA LOS PRODUCTOS ACTIVOS */
-$productos = ControladorFormularios::ctrSelecionarRegistros(null,null,null,null,0);
+$productos = ControladorFormularios::ctrSelecionarRegistros(null,null,null,null,1);
 
 $eliminar = new ControladorFormularios();
-$eliminar ->ctrEliminarRegistro(1);
+$eliminar ->ctrEliminarRegistro(0);
 
 ?>
 
@@ -33,15 +32,11 @@ $eliminar ->ctrEliminarRegistro(1);
                   <td id="stock"><?php echo $value["stock"];?></td>
                   <td>
                       <div class="btn-group">
-                          <div class="px-1">
-                              <a href="index.php?pagina=actualizar_producto&id=<?php echo $value["id"];?>" 
-                              class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                          </div>
 
                           <form method="post">
                               <!-- BOTON PARA INGRESAR LOGUEARSE (abre un modal) -->
-                              <input type="hidden" value="<?php echo $value["id"];?>" name="eliminarRegistro">
-                              <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                              <input type="hidden" value="<?php echo $value["id"];?>" name="restaurarRegistro">
+                              <button type="submit" class="btn btn-success"><i class="fas fa-trash-restore"></i></button>
                           </form>
                           
                       </div>
