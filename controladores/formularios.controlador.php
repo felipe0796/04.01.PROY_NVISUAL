@@ -106,7 +106,7 @@ class ControladorFormularios{
                     echo "<li>".$campos[$i]."</li>";
                 }echo '</div>';
             }else{
-                if ($respuesta["login"] === $_POST["ingresoUsername"] && $respuesta["pwd"] === $_POST["ingresoPassword"]) {
+                if ($respuesta != "" && $respuesta["login"] === $_POST["ingresoUsername"] && $respuesta["pwd"] === $_POST["ingresoPassword"]) {
                     
                     /**variables de session */
 
