@@ -1,6 +1,26 @@
 <h5 class="text-center py-2 mx-5 mb-4 bg-primary rounded">LISTADO DE PRODUCTOS</h5>
 
+
+
 <?php
+
+if (!isset($_SESSION["validarIngreso"])) {
+
+    echo '<script>
+    window.location = "index.php?pagina=inicio";
+    </script>';
+    return;
+    
+}else {
+
+    if ($_SESSION["validarIngreso"] != "ok") {
+        echo '<script>
+        window.location = "index.php?pagina=inicio";
+        </script>';
+        return;
+    }
+    
+}
 
 /** 0 : ES EL CODIGO QUE MUESTRA LOS PRODUCTOS ACTIVOS */
 $productos = ControladorFormularios::ctrSelecionarRegistros(null,null,null,null,0);

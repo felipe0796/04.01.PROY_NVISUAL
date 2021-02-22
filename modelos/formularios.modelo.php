@@ -28,7 +28,23 @@ class ModeloFormularios{
     }
 
     /**
-     * SELECCIONAR REGISTRO, INGRESO LOGIN Y MOSTRAR DATOS SEGUN EL ID ----------------------------
+     * NUEVO INGRESO AL SISTEMA-----------------------------------------------------------------
+     */
+    static public function mdlIngresoSistema($username, $pwd){
+
+        $stmt = Conexion::conectar()->prepare("call sp_ingreso_usuario(:login, :pwd)");
+        $stmt -> bindParam(":login", $username, PDO::PARAM_STR);
+        $stmt -> bindParam(":pwd", $pwd, PDO::PARAM_STR);
+        $stmt -> execute();
+        return $stmt -> fetch();
+        $stmt -> close();
+        $stmt = null;
+
+    }
+
+
+    /**
+     * SELECCIONAR REGISTRO, MOSTRAR DATOS SEGUN EL ID ------------------------------------------
      */
     static public function mdlSelecionarRegistros($email, $valorPostEmail, $id, $valorGetId, $valorEstado){
 
@@ -41,17 +57,6 @@ class ModeloFormularios{
             $stmt -> execute();
 
             return $stmt -> fetchAll();
-
-        }elseif ($id == null && $valorGetId == null && $valorEstado == null) {
-
-            /** Ingreso mediante el email*/
-            $stmt = conexion::conectar()->prepare("call sp_loginUsuario(:$email,null)");
-
-            $stmt -> bindParam(":".$email, $valorPostEmail, PDO::PARAM_STR);
-
-            $stmt -> execute();
-
-            return $stmt -> fetch();
 
         }elseif ($email == null && $valorPostEmail == null && $valorEstado == null){
 
@@ -119,7 +124,7 @@ class ModeloFormularios{
     }
 
     /**
-     * LISTA LOS TIPOS DE PRODUCTO (COMBOBOX) ----------------------------
+     * LISTA LOS TIPOS DE PRODUCTO (COMBOBOX) ------------------------------------------------------
      */
     static public function mdlSelecionartipo(){
 

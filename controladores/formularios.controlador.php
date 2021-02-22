@@ -3,7 +3,7 @@
 class ControladorFormularios{
 
     /**
-     * REGISTRO (METODO ESTATICO)
+     * REGISTRO ------------------------------------------------------------------------------------------------------------------
      */
     static public function ctrRegistro(){
 
@@ -16,8 +16,6 @@ class ControladorFormularios{
                             "precio" => $_POST["registroPrecio"],
                             "stock" => $_POST["registroStock"]);
            
-
-            /** PRUEBA (funciona)*/
             $controlAlerta = ControladorFormularios::ctrControlAlerta();
             echo $controlAlerta;
         
@@ -46,8 +44,9 @@ class ControladorFormularios{
         }
     }
 
+
     /**
-     * FUNCIONES DE MENSAJE ALERTA
+     * FUNCIONES DE MENSAJE ALERTA--------------------------------------------------------------------------------------------------
      */
     static public function ctrControlAlerta(){
         /**Si el navegador tiene informacion en su historial se limpia */    
@@ -67,8 +66,9 @@ class ControladorFormularios{
         </script>";
     }
 
+
     /**
-     * SELECCIONAR REGISTROS (listado)
+     * SELECCIONAR REGISTROS (listado)----------------------------------------------------------------------------------------------
      */
     static public function ctrSelecionarRegistros($email, $valorPostEmail, $id, $valorGetId, $valorEstado){
 
@@ -77,18 +77,18 @@ class ControladorFormularios{
         return $respuesta;
     }
 
+
     /**
-     * INGRESO-----(FALTA COMPLETAR PARA MI PROY)
+     * INGRESO-----------------------------------------------------------------------------------------------------------------------
      */
     public function ctrIngreso(){
 
-        if (isset($_POST["ingresoEmail"])) {
+        if (isset($_POST["ingresoUsername"]) && isset($_POST["ingresoPassword"])) {
 
-            $email = "email";
-            $id = "id";
-            $valorPostEmail = $_POST["ingresoEmail"];
+            $username = $_POST["ingresoUsername"];
+            $pwd = $_POST["ingresoPassword"];
 
-            $respuesta = ModeloFormularios::mdlSelecionarRegistros($email, $valorPostEmail, null, null);
+            $respuesta = ModeloFormularios::mdlIngresoSistema($username, $pwd);
 
             /**limpia los archivos que se guardan en memoria y desaparece el mensaje de alerta */
             $alerta = ControladorFormularios::ctrControlAlerta();
@@ -96,8 +96,8 @@ class ControladorFormularios{
 
             $campos = array();
         
-            if ($_POST["ingresoEmail"] == "") {
-                array_push($campos, "El campo Email no debe estar vacío.");
+            if ($_POST["ingresoUsername"] == "") {
+                array_push($campos, "El campo Username no debe estar vacío.");
             }if ($_POST["ingresoPassword"] == "" || strlen($_POST["ingresoPassword"])>10) {
                 array_push($campos, "El campo contraseña no debe estar vacío, ni debe tener más de 10 caracteres");
             }if (count($campos) > 0) {
@@ -106,20 +106,24 @@ class ControladorFormularios{
                     echo "<li>".$campos[$i]."</li>";
                 }echo '</div>';
             }else{
-                if ($respuesta["email"] == $_POST["ingresoEmail"] && $respuesta["pwd"] == $_POST["ingresoPassword"]) {
+                if ($respuesta["login"] === $_POST["ingresoUsername"] && $respuesta["pwd"] === $_POST["ingresoPassword"]) {
                     
                     /**variables de session */
 
                     $_SESSION ["validarIngreso"] = "ok";
 
                     /************************/
-                    echo '<script>
+                    echo '<div class="alert alert-success" id="alerta">Ingresaste al sistema</div>
+                    <script>
+                    setTimeout(function(){
                         window.location = "index.php?pagina=inicio";
+                    },2500);
                     </script>';
     
-                }else {
+                }
+                else {
                     
-                    echo '<div class="alert alert-danger" id="alerta">Error al ingresar al sistema, el email o la contraseña no coinciden</div>';
+                    echo '<div class="alert alert-warning" id="alerta">Error al ingresar al sistema, el username o la contraseña no coinciden</div>';
                     
                 }
             
@@ -129,8 +133,9 @@ class ControladorFormularios{
 
     }
 
+
     /**
-     * ACTUALIZAR REGISTRO
+     * ACTUALIZAR REGISTRO------------------------------------------------------------------------------------------------------
      */
     public function ctrActualizarRegistro(){
 
@@ -178,11 +183,10 @@ class ControladorFormularios{
             
         }
 
-
     }
 
     /**
-     * ELIMINAR REGISTROS
+     * ELIMINAR REGISTROS------------------------------------------------------------------------------------------------------
      */
 
     public function ctrEliminarRegistro($valorEstado){
@@ -236,7 +240,7 @@ class ControladorFormularios{
     }
 
     /**
-     * SELECCIONAR TIPO (listado)
+     * SELECCIONAR TIPO (listado)---------------------------------------------------------------------------------------------
      */
     static public function ctrSelecionarTipo(){
 

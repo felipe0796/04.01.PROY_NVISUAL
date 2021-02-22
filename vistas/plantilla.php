@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -89,16 +93,18 @@
             <ul class="navbar-nav ml-auto">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="far fa-user "><span class="font-weight-bold font-italic text-dark ml-3 px-5 py-2 bg-light rounded"></span></i>
+              
+                  <i class="far fa-user "></i>
+                
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
                   <!-- BOTON PARA INGRESAR LOGUEARSE (abre un modal) -->
-                  <button type="button" class="btn btn-primary dropdown-item" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ingreso</button>
+                  <button type="button" class="btn btn-primary dropdown-item" data-toggle="modal" data-target="#exampleModal" >Ingreso</button>
 
                   
                     <!-- PAGINA DE REGISTRO DE USUARIOS -->
-                    <a class="dropdown-item" href="index.php?pagina=registro_usuario">Registrarse</a>
+                    <a class="dropdown-item" href="index.php?pagina=salir_usuario">Salir</a>
                   
                 </div>
               </li>
@@ -115,6 +121,13 @@
 
   <!-- CONTENIDO DE LAS PAGINAS -->
   <div class="container-fluid mt-5">
+    <?php 
+      $ingreso = new ControladorFormularios();
+      $ingreso -> ctrIngreso();
+
+      
+    ?>
+    
 
     <?php
 
@@ -126,7 +139,7 @@
           $_GET["pagina"] == "inicio" ||
           $_GET["pagina"] == "registro_producto" ||
           $_GET["pagina"] == "listado_producto" ||
-          $_GET["pagina"] == "registro_usuario" ||
+          $_GET["pagina"] == "salir_usuario" ||
           $_GET["pagina"] == "actualizar_producto"||
           $_GET["pagina"] == "listado_producto_eliminado" 
          
@@ -147,6 +160,8 @@
 
   <!-- MODAL PARA INGRESO AL SISTEMA (VER PARA DESPUES)-->
 
+  
+
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -159,23 +174,26 @@
 
         <!-- BLOQUE PARA INGREAR USUARIO Y CONTRASEÑA -->
         <div class="modal-body">
-          <div class="container">
+          <form class="container" method="post">
+
+
+            
 
             <!-- form con íconos USERNAME-->
             <div class="form-group">
-              <label for="email">Username:</label>
+              <label>Username:</label>
               <!-- bloque del ícono -->
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-user"></i></span>
                 </div>
-                <input type="email" class="form-control" placeholder="Ingresa tu usuario" id="email" name="ingresoEmail">
+                <input type="text" class="form-control" placeholder="Ingresa tu usuario" id="login" name="ingresoUsername">
               </div>
             </div>
 
             <!-- form con íconos CONTRASEÑA-->
             <div class="form-group">
-              <label for="pwd">Contraseña:</label>
+              <label>Contraseña:</label>
               <!-- bloque del ícono -->
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -184,14 +202,12 @@
                 <input type="password" class="form-control" placeholder="Ingresa tu contraseña" id="pwd" name="ingresoPassword">
               </div>
             </div>
+            <!-- BOTON PARA INGRESAR AL SISTEMA -->
+            <button type="submit" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i></button>
 
-          </div>
+          </form>
         </div>
-
-        <!-- BOTON PARA INGRESAR AL SISTEMA -->
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i></button>
-        </div>
+        
 
       </div>
     </div>
